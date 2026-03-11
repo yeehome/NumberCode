@@ -1,50 +1,84 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <meta content="telephone=no" name="format-detection">
-    <meta content="email=no" name="format-detection"> 
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
 <title>jQuery验证码随机数字运算代码</title>  
 
 <style type="text/css"> 
 *{ margin: 0; padding: 0; }
-.code-box{ height: 27px; } 
-.nocode {  
-	display: inline-block;
-    width: 100px;  
-    height: 27px;  
-}    
+.code-box{ height: 35px; width:300px; margin: 100px auto;  } 
 .code {  
 	display: inline-block; float: left;
-    color: #ff0000;  
-    font-style: italic;  
-    font-weight: bold;  
-    text-align: center;  
-    width: 100px;  
-    height: 27px;  
-    line-height: 27px;
-    cursor: pointer;  
-    background: #e2b4a2;
+  color: #ff0000;  
+  font-style: italic;  
+  font-weight: bold;  
+  text-align: center;  
+  width: 100px;  
+  height: 35px;  
+  line-height: 35px;
+  cursor: pointer;  
+  background: #e2b4a2;
 }  
 .input {  
-    width: 100px; height: 25px;   float: left; outline: none;
-    line-height: 25px; border: solid 1px #eee; 
-    text-align: center;  
+  width: 100px; height: 33px;   float: left; outline: none;
+  line-height: 33px; border: solid 1px #eee; 
+  text-align: center;  
 }  
-.code-box button{ float: left; width: 60px; height: 27px; text-align: center; background: #c70f17; color: #fff; border: none;cursor: pointer;}
+.code-box button{ float: left; width: 60px; height: 35px; text-align: center; background: #c70f17; color: #fff; border: none;cursor: pointer;}
 </style>  
 
 </head>  
   
 <body>  
 <div class="code-box">
-    <span id="code" class="nocode">验证码</span><input type="text" class="input" /><button id="check">验证</button>
+	<div id="captchaFormula" class="code" onclick="refreshCaptcha()"></div>
+	<input type="number" id="userInput" class="input" placeholder="请输入结果">
+	<button onclick="checkCaptcha()">验证</button>
 </div>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
 <script type="text/javascript" src="js/code.js"></script>  
+<script>
+  let currentCaptcha; // 存储当前验证码信息
+
+  // 页面加载时生成验证码
+  window.onload = () => {
+    currentCaptcha = generateMathCaptcha();
+    document.getElementById("captchaFormula").textContent = currentCaptcha.formula;
+  }; 
+
+  // 新增：刷新验证码函数
+  function refreshCaptcha() {
+    currentCaptcha = generateMathCaptcha();
+    document.getElementById("captchaFormula").textContent = currentCaptcha.formula;
+    document.getElementById("userInput").value = "";
+    // 随机生成背景颜色
+    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+    document.getElementById("captchaFormula").style.backgroundColor = randomColor;
+  }
+
+  // 验证用户输入
+  function checkCaptcha() {
+    const userInput = document.getElementById("userInput").value;
+    if (verifyCaptcha(userInput, currentCaptcha.result)) { // 注意：需修改verifyCaptcha接收result参数
+      alert("验证通过！");
+      // 重新生成新验证码
+      currentCaptcha = generateMathCaptcha();
+      document.getElementById("captchaFormula").textContent = currentCaptcha.formula;
+      document.getElementById("userInput").value = "";
+    } else {
+      alert("验证失败，请重新输入！");
+    }
+  }
+
+  // 调整verifyCaptcha函数，接收预先生成的result
+  function verifyCaptcha(userInput, result) {
+    return Number(userInput) === result;
+  }
+</script>
 </body>
 </html>  
-
