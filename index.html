@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml">  
+<head>  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+<title>jQuery验证码随机数字运算代码</title>  
+
+<style type="text/css"> 
+*{ margin: 0; padding: 0; }
+.code-box{ height: 27px; } 
+.nocode {  
+	display: inline-block;
+    width: 100px;  
+    height: 27px;  
+}    
+.code {  
+	display: inline-block; float: left;
+    color: #ff0000;  
+    font-style: italic;  
+    font-weight: bold;  
+    text-align: center;  
+    width: 100px;  
+    height: 27px;  
+    line-height: 27px;
+    cursor: pointer;  
+    background: #e2b4a2;
+}  
+.input {  
+    width: 100px; height: 25px;   float: left; outline: none;
+    line-height: 25px; border: solid 1px #eee; 
+    text-align: center;  
+}  
+.code-box button{ float: left; width: 60px; height: 27px; text-align: center; background: #c70f17; color: #fff; border: none;cursor: pointer;}
+</style>  
+
+</head>  
+  
+<body>  
+<div class="code-box">
+    <span id="code" class="nocode">验证码</span><input type="text" class="input" /><button id="check">验证</button>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="js/code.js"></script>  
+</body>
+</html>  
